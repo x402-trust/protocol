@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+sdk/node_modules/
+api/node_modules/
+
+# Environment
+.env
+circle-wallet.json
+
+# Hardhat
+cache/
+artifacts/
+typechain-types/
+coverage/
+coverage.json
+
+# Build outputs
+deployment.json
+
+# OS files
+.DS_Store
+*.log
+
+# IDE
+.vscode/
+.idea/

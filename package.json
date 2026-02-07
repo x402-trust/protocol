@@ -1,0 +1,30 @@
+{
+  "name": "x402-trust-protocol",
+  "version": "1.0.0",
+  "description": "x402 Trust Protocol - Secure payments for AI agents with trust scoring and escrow protection",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.js --network arcTestnet",
+    "verify": "hardhat verify --network baseSepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.4.0",
+    "@openzeppelin/contracts-upgradeable": "^5.0.0",
+    "dotenv": "^16.6.1",
+    "hardhat": "^2.28.4"
+  },
+  "keywords": [
+    "x402",
+    "usdc",
+    "trust",
+    "escrow",
+    "ai-agents",
+    "openclaw"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@circle-fin/developer-controlled-wallets": "^10.1.0"
+  }
+}

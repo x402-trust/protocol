@@ -1,0 +1,165 @@
+{
+    "name": "x402-trust",
+    "version": "1.0.0",
+    "description": "Secure x402 payments with trust scoring and escrow protection for AI agents",
+    "homepage": "https://github.com/x402-trust/protocol",
+    "author": "x402-trust",
+    "license": "MIT",
+    "actions": [
+        {
+            "name": "check_provider",
+            "description": "Check a provider's trust score and get recommendation before paying",
+            "parameters": {
+                "provider_address": {
+                    "type": "string",
+                    "description": "Ethereum address of the provider",
+                    "required": true
+                }
+            },
+            "returns": {
+                "score": "number (300-900)",
+                "tier": "string (Elite/Excellent/Good/Fair/Poor)",
+                "escrow_required": "boolean",
+                "recommended_timeout": "number (minutes)",
+                "recommendation": "string"
+            }
+        },
+        {
+            "name": "secure_payment",
+            "description": "Make a USDC payment with trust-based escrow protection",
+            "parameters": {
+                "provider_address": {
+                    "type": "string",
+                    "description": "Ethereum address of the provider",
+                    "required": true
+                },
+                "amount_usdc": {
+                    "type": "number",
+                    "description": "Payment amount in USDC",
+                    "required": true
+                },
+                "request_description": {
+                    "type": "string",
+                    "description": "Description of what you're paying for",
+                    "required": true
+                }
+            },
+            "returns": {
+                "payment_id": "string",
+                "escrow_used": "boolean",
+                "timeout_minutes": "number",
+                "transaction_hash": "string"
+            }
+        },
+        {
+            "name": "confirm_delivery",
+            "description": "Confirm successful delivery and release escrowed payment",
+            "parameters": {
+                "payment_id": {
+                    "type": "string",
+                    "description": "Payment identifier from secure_payment",
+                    "required": true
+                },
+                "response_data": {
+                    "type": "string",
+                    "description": "The response data received from provider",
+                    "required": true
+                }
+            },
+            "returns": {
+                "success": "boolean",
+                "transaction_hash": "string",
+                "provider_new_score": "number"
+            }
+        },
+        {
+            "name": "raise_dispute",
+            "description": "Dispute a failed or incorrect delivery",
+            "parameters": {
+                "payment_id": {
+                    "type": "string",
+                    "description": "Payment identifier",
+                    "required": true
+                },
+                "reason": {
+                    "type": "string",
+                    "description": "Description of the issue",
+                    "required": true
+                }
+            },
+            "returns": {
+                "dispute_id": "string",
+                "track": "string (FastTrack/Standard/Complex)",
+                "resolution_hours": "number",
+                "transaction_hash": "string"
+            }
+        },
+        {
+            "name": "compare_providers",
+            "description": "Compare multiple providers and get recommendation",
+            "parameters": {
+                "provider_addresses": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of provider addresses to compare",
+                    "required": true
+                }
+            },
+            "returns": {
+                "comparison": "array of provider comparisons",
+                "recommended": "string (best provider address)",
+                "reasoning": "string"
+            }
+        }
+    ],
+    "config": {
+        "RPC_URL": {
+            "type": "string",
+            "description": "RPC URL for blockchain network",
+            "default": "https://rpc.testnet.arc.network"
+        },
+        "CHAIN_ID": {
+            "type": "number",
+            "description": "Chain ID for the network",
+            "default": 5042002
+        },
+        "TRUST_PROTOCOL_ADDRESS": {
+            "type": "string",
+            "description": "TrustProtocol contract address",
+            "default": "0x1eC0007C35Aa4A5008263e2C257942f4cb4F329F"
+        },
+        "REPUTATION_ENGINE_ADDRESS": {
+            "type": "string",
+            "description": "ReputationEngine contract address",
+            "default": "0x86fa599c4474E8098400e57760543E7191B2DA1e"
+        },
+        "ESCROW_VAULT_ADDRESS": {
+            "type": "string",
+            "description": "EscrowVault contract address",
+            "default": "0x35D3d7Ff317bca17a123D8B18923599Ac1F9d817"
+        },
+        "DISPUTE_MANAGER_ADDRESS": {
+            "type": "string",
+            "description": "DisputeManager contract address",
+            "default": "0x7449713F47A782b5df27ac6d375A55E6dA7A58a9"
+        },
+        "PAYMENT_ROUTER_ADDRESS": {
+            "type": "string",
+            "description": "PaymentRouter contract address",
+            "default": "0xe37B0FA63A08A726D810A4692FeD16583a1D0Cf6"
+        },
+        "USDC_ADDRESS": {
+            "type": "string",
+            "description": "USDC token address",
+            "default": "0x8Fd5A8a2d6373a1c299C46Ed7862CA277316237B"
+        },
+        "EVM_PRIVATE_KEY": {
+            "type": "string",
+            "description": "Private key for signing transactions",
+            "required": true,
+            "secret": true
+        }
+    }
+}
