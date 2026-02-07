@@ -187,12 +187,6 @@ clawhub install x402-trust
 
 ---
 
-## 🏆 USDC Hackathon Submission
-
-- **Track:** SmartContract
-- **Network:** Arc Testnet (Circle USDC L1)
-- **Documentation:** [SUBMISSION.md](./SUBMISSION.md)
-
 ---
 
 ## 📄 License
